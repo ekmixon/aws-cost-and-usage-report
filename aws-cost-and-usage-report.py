@@ -21,10 +21,7 @@ results = []
 
 token = None
 while True:
-    if token:
-        kwargs = {'NextPageToken': token}
-    else:
-        kwargs = {}
+    kwargs = {'NextPageToken': token} if token else {}
     data = cd.get_cost_and_usage(TimePeriod={'Start': start, 'End':  end}, Granularity='DAILY', Metrics=['UnblendedCost'], GroupBy=[{'Type': 'DIMENSION', 'Key': 'LINKED_ACCOUNT'}, {'Type': 'DIMENSION', 'Key': 'SERVICE'}], **kwargs)
     results += data['ResultsByTime']
     token = data.get('NextPageToken')
